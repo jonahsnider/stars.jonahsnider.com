@@ -20,7 +20,9 @@ jobs:
 
     steps:
       - name: Install Encore
-        run: curl -L https://encore.dev/install.sh | bash
+        run: |
+          curl -L https://encore.dev/install.sh | bash
+          echo $ENCORE_INSTALL/bin >> $GITHUB_PATH
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3

@@ -19,22 +19,19 @@ jobs:
     steps:
       - name: Checkout Git repository
         uses: actions/checkout@v7
-
       - name: Set up Go
         uses: actions/setup-go@v7
         with:
           go-version-file: go.mod
-
       - name: Check formatting
         run: |
           gofmt -w .
           git diff --exit-code
-
-      - name: Vet
-        run: go vet ./...
-
-      - name: Test
-        run: go test ./...
+      - parallel:
+          - name: Vet
+            run: go vet ./...
+          - name: Test
+            run: go test ./...
 
   publish:
     name: Build and push image
